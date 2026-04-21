@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "./layouts/RootLayout";
-import { Note, Home, Input } from "./pages";
+import { Note, Home } from "./pages";
 
 export const router = createBrowserRouter([
     {
@@ -12,12 +12,22 @@ export const router = createBrowserRouter([
                 element: <Home />
             },
             {
-                path: 'note/input',
-                element: <Input />
-            },
-            {
-                path: 'note/:noteId',  //dynamic route for specific notes
-                element: <Note />
+                path: 'note/:id',  //dynamic route for specific notes
+                element: <Note />,
+                children: [
+                    {
+                        index: true, //default page at note/:id
+                        element: <Note choice = {'view'} />
+                    },
+                    {
+                        path: 'edit', //edit note
+                        element: <Note choice={'edit'} />
+                    },
+                    {
+                        path: 'new', //create new note
+                        element: <Note choice={'new'} />
+                    }
+                ],
             },
         ],
     },

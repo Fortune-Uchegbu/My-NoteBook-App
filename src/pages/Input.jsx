@@ -1,9 +1,8 @@
 import React from 'react'
 
-const Input = () => {
+export const Input = ({ choice }) => {
   return (
-    <div>Input</div>
+    <div>`${choice} Input`</div>
   )
 }
 
-export default Input

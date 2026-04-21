@@ -1,5 +1,6 @@
 import React from 'react'
-import { toggleTheme } from "../utils";
+import '../index.css';
+// import { toggleTheme } from "../utils";
 
 const RootLayout = () => {
   return (
