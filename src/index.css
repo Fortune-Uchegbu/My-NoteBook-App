@@ -10,6 +10,14 @@
   --color-muted: #6b7280;       /* Gray text */
 }
 
+[data-theme = 'light'] {
+  --color-primary: #3b82f6;      /* Blue */
+  --color-surface: #ffffff;     /* White page */
+  --color-text: #1f2937;        /* Near black */
+  --color-border: #e5e7eb;      /* Light gray line */
+  --color-muted: #6b7280;       /* Gray text */
+}
+
 /* System default: dark */
 @media (prefers-color-scheme: dark) {
   :root {
@@ -27,14 +35,6 @@
   --color-surface: #1f2937;     /* Near black page */
   --color-text: #ffffff;        /* white */
   --color-border: #3b82f6;      /* Blue */
-  --color-muted: #6b7280;       /* Gray text */
-}
-
-[data-theme = 'light'] {
-  --color-primary: #3b82f6;      /* Blue */
-  --color-surface: #ffffff;     /* White page */
-  --color-text: #1f2937;        /* Near black */
-  --color-border: #e5e7eb;      /* Light gray line */
   --color-muted: #6b7280;       /* Gray text */
 }
 

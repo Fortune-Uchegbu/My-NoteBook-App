@@ -1,10 +1,14 @@
-import React from 'react'
-import '../index.css';
+import { Outlet } from "react-router-dom";
 // import { toggleTheme } from "../utils";
 
 const RootLayout = () => {
   return (
-    <div>RootLayout</div>
+    <>
+    <MobileMenu />
+    <Hero />
+    <Outlet />
+    <Footer />
+    </>
   )
 }
 

@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "./layouts/RootLayout";
 import { Note, Home } from "./pages";
 
-export const router = createBrowserRouter([
+const router = createBrowserRouter([
     {
         path: "/",
         element: <RootLayout />,
@@ -32,3 +32,5 @@ export const router = createBrowserRouter([
         ],
     },
 ]);
+
+export default router;
