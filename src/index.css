@@ -8,6 +8,8 @@
   --color-text: #1f2937;        /* Near black */
   --color-border: #e5e7eb;      /* Light gray line */
   --color-muted: #6b7280;       /* Gray text */
+
+  --padding-default: 12px;
 }
 
 [data-theme = 'light'] {
@@ -16,30 +18,31 @@
   --color-text: #1f2937;        /* Near black */
   --color-border: #e5e7eb;      /* Light gray line */
   --color-muted: #6b7280;       /* Gray text */
+  --padding-default: 12px;
 }
 
 /* System default: dark */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-primary: #e5e7eb;      /* Light gray line */
+    --color-primary: #6b7280;      /* Light gray line */
     --color-surface: #1f2937;     /* Near black page */
     --color-text: #ffffff;        /* white */
     --color-border: #3b82f6;      /* Blue */
     --color-muted: #6b7280;       /* Gray text */
+    --padding-default: 12px;
   }
 }
 
 /* Manual Overrides for theme toggling */
 [data-theme = 'dark'] {
-  --color-primary: #e5e7eb;      /* Light gray line */
+  --color-primary: #6b7280;      /* Light gray line */
   --color-surface: #1f2937;     /* Near black page */
   --color-text: #ffffff;        /* white */
   --color-border: #3b82f6;      /* Blue */
   --color-muted: #6b7280;       /* Gray text */
+  --padding-default: 12px;
 }
 
 @layer base {
-  body {
-    @apply bg-surface text-text antialiased;
-  }
+  body {@apply bg-surface text-text border-border}
 }
