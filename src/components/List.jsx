@@ -2,6 +2,8 @@ import React from 'react'
 
 export const List = () => {
   return (
-    <section className='grow'>List</section>
+    <ul className="grow">
+      <li>Test-one</li>
+    </ul>
   )
 }
