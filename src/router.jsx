@@ -1,34 +1,29 @@
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "./layouts/RootLayout";
-import { Note, Home } from "./pages";
+import { Home, Input, ViewNote, NotFound, ErrorElem } from "./pages";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <RootLayout />,
+        errorElement: <ErrorElem />,
         children: [
             {
                 index: true, //default page at /
                 element: <Home />
-            },
-            {
+            },{
                 path: 'note/:id',  //dynamic route for specific notes
-                element: <Note />,
-                children: [
-                    {
-                        index: true, //default page at note/:id
-                        element: <Note choice = {'view'} />
-                    },
-                    {
-                        path: 'edit', //edit note
-                        element: <Note choice={'edit'} />
-                    },
-                    {
-                        path: 'new', //create new note
-                        element: <Note choice={'new'} />
-                    }
-                ],
-            },
+                element: <ViewNote />
+            },{
+                path: 'note/:id/edit',
+                element: <Input choice={'edit'} />
+            },{
+                path: 'note/new',
+                element: <Input choice={'new'} />
+            },{
+                path: "*",
+                element: <NotFound /> //custom 404 element
+            }
         ],
     },
 ]);
