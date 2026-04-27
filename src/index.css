@@ -3,7 +3,7 @@
 /* System default: light */
 @theme {
   /* core tokens / variables */
-  --color-primary: #3b82f6;      /* Blue */
+  --color-primary: #1f2937;      /* Near black Blue */
   --color-surface: #ffffff;     /* White page */
   --color-text: #1f2937;        /* Near black */
   --color-border: #e5e7eb;      /* Light gray line */
@@ -14,7 +14,7 @@
 }
 
 [data-theme = 'light'] {
-  --color-primary: #3b82f6;      /* Blue */
+  --color-primary: #1f2937;      /* Near black Blue */
   --color-surface: #ffffff;     /* White page */
   --color-text: #1f2937;        /* Near black */
   --color-border: #e5e7eb;      /* Light gray line */
@@ -30,7 +30,7 @@
     --color-primary: #6b7280;      /* Light gray line */
     --color-surface: #1f2937;     /* Near black page */
     --color-text: #ffffff;        /* white */
-    --color-border: #3b82f6;      /* Blue */
+    --color-border: #6b7280;      /* Gray */
     --color-muted: #6b7280;       /* Gray text */
     --color-button: #FFB343;      /* cream */
     --padding-default: 12px;
@@ -42,7 +42,7 @@
   --color-primary: #6b7280;      /* Light gray line */
   --color-surface: #1f2937;     /* Near black page */
   --color-text: #ffffff;        /* white */
-  --color-border: #3b82f6;      /* Blue */
+  --color-border: #6b7280;      /* Gray */
   --color-muted: #6b7280;       /* Gray text */    
   --color-button: #FFB343;      /* cream */
   --padding-default: 12px;

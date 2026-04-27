@@ -61,7 +61,7 @@ const RootLayout = () => {
     // Clean up listener on unmount
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  const outLetClass = "px-default py-2";
+  const outLetClass = "px-default grow w-full";
 
   return (
     <div aria-label="app-wrapper" className="w-full max-w-360 mx-auto text-text relative h-dvh overflow-hidden">
@@ -73,7 +73,7 @@ const RootLayout = () => {
       className={`h-full py-2 lg:py-0 grow flex flex-col justify-between `}
       >
         <Header setIsOpen = {setMenuOpen} />
-        <main className="px-default lg:px-0 grow lg:flex ">
+        <main className="lg:px-0 grow lg:flex">
           {!mobile && <Menu isOpen = {menuOpen} setIsOpen = {setMenuOpen} ref={menuRef} mobile={mobile} />}
           <Outlet 
           context={{noteList, mobile, outLetClass}}

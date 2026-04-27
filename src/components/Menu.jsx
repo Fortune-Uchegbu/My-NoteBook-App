@@ -22,7 +22,7 @@ export const Menu = forwardRef(({isOpen, setIsOpen, mobile}, ref) => {
         { !mobile && <nav 
         id="menu"
         ref = {ref}
-        className={`w-full h-full bg-surface py-3 flex flex-col translate-x-0 lg:border-r`}>
+        className={`w-full h-full bg-surface py-3 flex flex-col translate-x-0 lg:border-r lg:border-border`}>
             <List />
         </nav>}
     </aside>
