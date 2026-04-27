@@ -1,19 +1,15 @@
 import { Outlet } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useContext } from "react";
 import { Footer, Header, Menu } from '../components';
+import { NoteContext } from "../contexts/NoteContext";
 import DarkLayer from "../components/DarkLayer";
-// import { toggleTheme } from "../utils";
+
 
 const RootLayout = () => {
-  // states
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef(null);
-  const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
-  const [noteList, setNoteList] = useState([]);
+  // context
+  const {menuOpen, setMenuOpen, windowSize, setWindowSize} = useContext(NoteContext);
   const mobile = windowSize.width < 1024;
+  const menuRef = useRef(null);
   const handleEscape = (e) => (e.key === 'Escape') && setMenuOpen(false);
   // accessibility
   useEffect(() => {
@@ -64,24 +60,24 @@ const RootLayout = () => {
   const outLetClass = "px-default grow w-full";
 
   return (
-    <div aria-label="app-wrapper" className="w-full max-w-360 mx-auto text-text relative h-dvh overflow-hidden">
-      {mobile && <Menu isOpen = {menuOpen} setIsOpen = {setMenuOpen} ref={menuRef} mobile={mobile} />}
-      <DarkLayer isOpen={menuOpen} setIsOpen={setMenuOpen} mobile={mobile} />
-      <div 
-      aria-label="underlay"
-      id="underlay"
-      className={`h-full py-2 lg:py-0 grow flex flex-col justify-between `}
-      >
-        <Header setIsOpen = {setMenuOpen} />
-        <main className="lg:px-0 grow lg:flex">
-          {!mobile && <Menu isOpen = {menuOpen} setIsOpen = {setMenuOpen} ref={menuRef} mobile={mobile} />}
-          <Outlet 
-          context={{noteList, mobile, outLetClass}}
-          />
-        </main>
-        <Footer />
+      <div aria-label="app-wrapper" className="w-full max-w-360 mx-auto text-text relative h-dvh overflow-hidden">
+        {mobile && <Menu isOpen = {menuOpen} setIsOpen = {setMenuOpen} ref={menuRef} mobile={mobile} />}
+        <DarkLayer isOpen={menuOpen} setIsOpen={setMenuOpen} mobile={mobile} />
+        <div 
+        aria-label="underlay"
+        id="underlay"
+        className={`h-full py-2 lg:py-0 grow flex flex-col justify-between `}
+        >
+          <Header setIsOpen = {setMenuOpen} />
+          <main className="lg:px-0 grow lg:flex">
+            {!mobile && <Menu isOpen = {menuOpen} setIsOpen = {setMenuOpen} ref={menuRef} mobile={mobile} />}
+            <Outlet 
+            context={{noteList, mobile, outLetClass}}
+            />
+          </main>
+          <Footer />
+        </div>
       </div>
-    </div>
     
   )
 }
