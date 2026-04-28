@@ -4,23 +4,23 @@
 @theme {
   /* core tokens / variables */
   --color-primary: #1f2937;      /* Near black Blue */
-  --color-surface: #ffffff;     /* White page */
+  --color-surface: #DCDCDC;     /* White page */
   --color-text: #1f2937;        /* Near black */
   --color-border: #e5e7eb;      /* Light gray line */
   --color-muted: #6b7280;       /* Gray text */
   --color-button: #1f2937;      /* Near black */
-  --color-button-text: #ffffff;  /* White*/
+  --color-button-text: #DCDCDC;  /* White*/
   --padding-default: 12px;
 }
 
 [data-theme = 'light'] {
   --color-primary: #1f2937;      /* Near black Blue */
-  --color-surface: #ffffff;     /* White page */
+  --color-surface: #DCDCDC;     /* White page */
   --color-text: #1f2937;        /* Near black */
   --color-border: #e5e7eb;      /* Light gray line */
   --color-muted: #6b7280;       /* Gray text */
   --color-button: #1f2937;      /* Near black */
-  --color-button-text: #ffffff  /* White*/
+  --color-button-text: #DCDCDC  /* White*/
   --padding-default: 12px;
 }
 

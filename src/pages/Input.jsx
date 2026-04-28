@@ -14,13 +14,18 @@ export const Input = ({ choice }) => {
     e.preventDefault();
     const form = document.getElementById('inputForm');
     const rawData = new FormData(form);
-    const rawDataObj = Object.fromEntries(rawData)
+    const rawDataPairs = Array.from(rawData);
+    const trimmedDataPairs = rawDataPairs.map(([key, value]) => [key,
+      (typeof value === 'string' ) ? value.trim() : value
+    ]);
+    const rawDataObj = Object.fromEntries(trimmedDataPairs);
+    console.log(rawDataObj)
 
     // Ensure both inputs are filled
     const hasEmpty = Object.values(rawDataObj).some(val => !(val.trim()));
     if (hasEmpty) {
-        alert('All fields are required!');
-        return;
+      alert('All fields are required!');
+      return;
     }
     // Add id appropriately.
     const isEdit = Boolean(id);
@@ -28,7 +33,7 @@ export const Input = ({ choice }) => {
     const data = {_id : ID, ...rawDataObj}
     form.reset();
     updateNote(data, isEditing);
-    navigate('/')
+    navigate('/'); //return back to home page
   };
 
   return (
