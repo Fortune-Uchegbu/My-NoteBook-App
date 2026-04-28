@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom';
 import router from './router.jsx';
-import { NoteProvider } from "../contexts/NoteContext";
+import  {NoteProvider}  from "./contexts/NoteContext.jsx";
 import './index.css';
 const root = document.getElementById('root');
 

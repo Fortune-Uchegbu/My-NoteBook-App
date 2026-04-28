@@ -1,12 +1,36 @@
-import { HandleFormInput } from "../utils"
-import { useOutletContext, useParams } from "react-router-dom"
+import { useOutletContext, useParams, useNavigate } from "react-router-dom"
+import {v7 as genId} from 'uuid';
+import { useUpdateNote } from "../customhooks/useUpdateNote";
 
 export const Input = ({ choice }) => {
+  const navigate = useNavigate();
+  const {noteList,mobile,outLetClass} = useOutletContext();
+  const { updateNote } = useUpdateNote();
   // determine state of choice
   const { id } = useParams();
   const isEditing = Boolean(id);  // acess id param accordingly
+  // submit handler
+  const HandleFormInput = (e, id) => {
+    e.preventDefault();
+    const form = document.getElementById('inputForm');
+    const rawData = new FormData(form);
+    const rawDataObj = Object.fromEntries(rawData)
 
-  const {noteList,mobile,outLetClass} = useOutletContext();
+    // Ensure both inputs are filled
+    const hasEmpty = Object.values(rawDataObj).some(val => !(val.trim()));
+    if (hasEmpty) {
+        alert('All fields are required!');
+        return;
+    }
+    // Add id appropriately.
+    const isEdit = Boolean(id);
+    const ID = isEdit ? id : genId();
+    const data = {_id : ID, ...rawDataObj}
+    form.reset();
+    updateNote(data, isEditing);
+    navigate('/')
+  };
+
   return (
     <form 
     id="inputForm"

@@ -1,11 +1,14 @@
-import React from 'react'
+import React from 'react';
+import { useContext } from "react";
+import { NoteContext } from "../contexts/NoteContext";
 
-const DarkLayer = ({ isOpen, setIsOpen, mobile }) => {
+const DarkLayer = ({mobile}) => {
+  const {menuOpen, setMenuOpen} = useContext(NoteContext);
   return (
     <>{mobile && 
         <div 
-        onClick={() => {if(isOpen) setIsOpen(false)}}
-        className={`fixed z-50 ${isOpen && 'inset-0 bg-black opacity-40'}`}>
+        onClick={() => {if(menuOpen) setMenuOpen(false)}}
+        className={`fixed z-50 ${menuOpen && 'inset-0 bg-black opacity-40'}`}>
         </div>
     }</>
   )

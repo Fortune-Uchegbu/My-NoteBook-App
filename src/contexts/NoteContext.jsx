@@ -1,9 +1,9 @@
-import { Children, createContext, useState } from "react";
+import react, { createContext, useState } from "react";
 // import { toggleTheme } from "../utils";
 
 export const NoteContext = createContext();
 
-export const NoteProvider = () => {
+export const NoteProvider = ({children}) => {
     // states
     const [noteList, setNoteList] = useState([]);
     const [menuOpen, setMenuOpen] = useState(false);
@@ -17,7 +17,7 @@ export const NoteProvider = () => {
 
     return (
         <NoteContext value={val}>
-            {Children}
+            {children}
         </NoteContext>
     )
 }
