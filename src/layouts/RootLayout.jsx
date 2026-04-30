@@ -60,7 +60,7 @@ const RootLayout = () => {
       clearTimeout(timer)
     }
   }, [menuOpen]);
-  const outLetClass = "px-default grow w-full";
+  const outLetClass = "px-default grow min-w-0 w-full";
 
   return (
       <div aria-label="app-wrapper" className="w-full max-w-360 mx-auto text-text relative h-dvh overflow-hidden">

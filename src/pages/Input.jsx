@@ -19,8 +19,6 @@ export const Input = ({ choice }) => {
       (typeof value === 'string' ) ? value.trim() : value
     ]);
     const rawDataObj = Object.fromEntries(trimmedDataPairs);
-    console.log(rawDataObj)
-
     // Ensure both inputs are filled
     const hasEmpty = Object.values(rawDataObj).some(val => !(val.trim()));
     if (hasEmpty) {

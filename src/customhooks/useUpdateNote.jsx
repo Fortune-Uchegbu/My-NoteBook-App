@@ -8,7 +8,6 @@ export const useUpdateNote = (data, choice) => {
     (choice) ? (noteList.map(val => (val.id === data.id) ? data : val )) /* editing */ : 
     [...noteList, data] /* creating */;
     setNoteList(newNoteList); //update state
-    // localStorage.setItem('noteList', newNoteList);
   }
   return {updateNote}
 }

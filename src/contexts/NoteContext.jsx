@@ -16,6 +16,7 @@ export const NoteProvider = ({children}) => {
     });
     useEffect(() => {
         localStorage.setItem('noteList', JSON.stringify(noteList));
+        console.log(noteList)
     }, [noteList])
     
     // value obj

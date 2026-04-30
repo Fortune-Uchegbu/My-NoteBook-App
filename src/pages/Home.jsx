@@ -1,9 +1,16 @@
 import { useOutletContext, useParams, useNavigate } from "react-router-dom";
 import { IoAdd } from "react-icons/io5";
+import { FaTrash } from "react-icons/fa";
 
 export const Home = () => {
   const {noteList, mobile, outLetClass} = useOutletContext();
   const navigate = useNavigate();
+
+  const handleDelete = (_id) => {
+    console.log('received!');
+
+  }
+
   return (
     <>
       {(noteList && noteList.length === 0) && 
@@ -19,10 +26,17 @@ export const Home = () => {
           <ul className="flex flex-col gap-y-3">
             {noteList.map((note) => (
               <li 
-              className="noteItem w-full border border-button p-4 rounded-xl"
-              key={note.id}>
-                <h2>{note.title}</h2>
-                <p>{note.body}</p>
+              className="noteItem w-full shadow border border-border p-4 rounded-xl flex justify-between items-center gap-x-6 min-w-0"
+              key={note._id}>
+                <div className="min-w-0">
+                  <h2 className="line-clamp-1 wrap-break-word font-semibold">{note.title}</h2>
+                  <p className="line-clamp-1 wrap-break-word">{note.body}</p>
+                </div>
+                <button 
+                className="p-2 cursor-pointer w-fit rounded-full hover:brightness-75 active:bg-border shrink-0" 
+                onClick={() => handleDelete(note._id)}>
+                    <FaTrash className="w-4 h-4"/>
+                </button>
               </li>
             ))}
           </ul>

@@ -6,7 +6,7 @@ import { NoteContext } from "../contexts/NoteContext";
 export const Menu = forwardRef(({mobile}, ref) => {
     const { menuOpen, setMenuOpen } = useContext(NoteContext);
     return (
-    <aside className={!mobile ? "w-1/5 h-full" : ""}>
+    <aside className={!mobile ? "w-1/5 h-full shrink-0" : ""}>
         { mobile && <nav 
         id="menu"
         ref = {ref}
@@ -22,7 +22,7 @@ export const Menu = forwardRef(({mobile}, ref) => {
         { !mobile && <nav 
         id="menu"
         ref = {ref}
-        className={`w-full h-full bg-surface py-3 flex flex-col translate-x-0 lg:border-r lg:border-border`}>
+        className={`w-full h-full bg-surface py-3 flex shrink-0 flex-col translate-x-0 lg:border-r lg:border-border`}>
             <List />
         </nav>}
     </aside>
