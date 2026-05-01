@@ -10,7 +10,7 @@ export const Input = ({ choice }) => {
   const { id } = useParams();
   const isEditing = Boolean(id);  // acess id param accordingly
   // submit handler
-  const HandleFormInput = (e, id) => {
+  const HandleFormInput = (e) => {
     e.preventDefault();
     const form = document.getElementById('inputForm');
     const rawData = new FormData(form);
@@ -26,11 +26,10 @@ export const Input = ({ choice }) => {
       return;
     }
     // Add id appropriately.
-    const isEdit = Boolean(id);
-    const ID = isEdit ? id : genId();
+    const ID = isEditing ? id : genId();
     const data = {_id : ID, ...rawDataObj}
     form.reset();
-    updateNote(data, isEditing);
+    updateNote(data, choice);
     navigate('/'); //return back to home page
   };
 
@@ -38,7 +37,7 @@ export const Input = ({ choice }) => {
     <form 
     id="inputForm"
     className={`${outLetClass} h-full py-3 flex flex-col gap-y-4`}
-    onSubmit={(e) => HandleFormInput(e, id)}>
+    onSubmit={HandleFormInput}>
       <input 
       type="text" 
       name="title" 

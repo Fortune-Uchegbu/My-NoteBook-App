@@ -1,14 +1,15 @@
 import { useOutletContext, useParams, useNavigate } from "react-router-dom";
 import { IoAdd } from "react-icons/io5";
 import { FaTrash } from "react-icons/fa";
-
+import { useUpdateNote } from "../customhooks/useUpdateNote";
 export const Home = () => {
   const {noteList, mobile, outLetClass} = useOutletContext();
   const navigate = useNavigate();
+  const {updateNote} = useUpdateNote();
 
-  const handleDelete = (_id) => {
-    console.log('received!');
-
+  const handleDelete = (id) => {
+    const itemToDel = noteList.find(val => val._id === id);
+    updateNote(itemToDel, 'delete')
   }
 
   return (
