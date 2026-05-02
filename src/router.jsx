@@ -13,7 +13,7 @@ const router = createBrowserRouter([
                 element: <Home />
             },{
                 path: 'note/:id',  //dynamic route for specific notes
-                element: <ViewNote />
+                element: <Input choice={'view'} />
             },{
                 path: 'note/:id/edit',
                 element: <Input choice={'edit'} />

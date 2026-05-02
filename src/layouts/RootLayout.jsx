@@ -30,11 +30,6 @@ const RootLayout = () => {
     const header = document.getElementsByTagName('header')[0];
     const main = document.getElementsByTagName('main')[0];
     const footer = document.getElementsByTagName('footer')[0];
-    // focus the menu first elem - return button only after dom is fully updated. 
-    const timer = setTimeout(() => {
-      const firstElem = menuRef.current?.querySelector('button');
-      firstElem?.focus();
-    }, 0);
     // prevent background scrolling while hidden
     if (menuOpen) {
       document.body.style.overflow = 'hidden'; 
@@ -57,10 +52,9 @@ const RootLayout = () => {
     return () => {
       window.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = 'unset';
-      clearTimeout(timer)
     }
   }, [menuOpen]);
-  const outLetClass = "px-default grow min-w-0 w-full";
+  const outLetClass = "px-default grow min-w-0 h-full w-full";
 
   return (
       <div aria-label="app-wrapper" className="w-full max-w-360 mx-auto text-text relative h-dvh overflow-hidden">
@@ -75,10 +69,9 @@ const RootLayout = () => {
         id="underlay"
         className={`h-full py-2 lg:py-0 grow flex flex-col justify-between `}>
           <Header />
-          <main className="lg:px-0 grow lg:flex">
+          <main className="lg:px-0 grow lg:flex h-full overflow-y-scroll">
             {!mobile && 
             <Menu 
-            ref={menuRef} 
             mobile={mobile} />}
             <Outlet 
             context={{noteList, mobile, outLetClass}}/>

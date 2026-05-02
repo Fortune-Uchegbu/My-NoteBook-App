@@ -1,53 +1,35 @@
-import { useOutletContext, useParams, useNavigate } from "react-router-dom"
-import {v7 as genId} from 'uuid';
-import { useUpdateNote } from "../customhooks/useUpdateNote";
+import { useOutletContext, useParams} from "react-router-dom"
+import { useUpdateNote, useFormInput } from "../customhooks";
 
 export const Input = ({ choice }) => {
-  const navigate = useNavigate();
   const {noteList,mobile,outLetClass} = useOutletContext();
   const { updateNote } = useUpdateNote();
-  // determine state of choice
+  const { handleFormInput } = useFormInput();
   const { id } = useParams();
-  const isEditing = Boolean(id);  // acess id param accordingly
-  // submit handler
-  const HandleFormInput = (e) => {
-    e.preventDefault();
-    const form = document.getElementById('inputForm');
-    const rawData = new FormData(form);
-    const rawDataPairs = Array.from(rawData);
-    const trimmedDataPairs = rawDataPairs.map(([key, value]) => [key,
-      (typeof value === 'string' ) ? value.trim() : value
-    ]);
-    const rawDataObj = Object.fromEntries(trimmedDataPairs);
-    // Ensure both inputs are filled
-    const hasEmpty = Object.values(rawDataObj).some(val => !(val.trim()));
-    if (hasEmpty) {
-      alert('All fields are required!');
-      return;
-    }
-    // Add id appropriately.
-    const ID = isEditing ? id : genId();
-    const data = {_id : ID, ...rawDataObj}
-    form.reset();
-    updateNote(data, choice);
-    navigate('/'); //return back to home page
-  };
+  const isEditing = choice === 'edit'; 
+  const isViewing = choice === 'view';
+  const note = noteList.find(val => val._id === id);
+
 
   return (
     <form 
     id="inputForm"
     className={`${outLetClass} h-full py-3 flex flex-col gap-y-4`}
-    onSubmit={HandleFormInput}>
+    onSubmit={(e) => handleFormInput(e, id)}>
       <input 
+      // readOnly = {isViewing ? true : false}
       type="text" 
       name="title" 
+      // value={note.title}
       id="title"
       className="font-semibold w-full p-2 text-2xl focus:outline-border lg:w-3/5" 
       placeholder="Title" />
 
       <textarea 
+      // readOnly = {isViewing ? true : false}
       type="text" 
       name="body" 
+      value={note.body}
       className="p-2 grow text-left focus:outline-border"
       placeholder="Start writing"
       id="body" />
@@ -55,7 +37,7 @@ export const Input = ({ choice }) => {
       <input 
       type="submit" 
       className="font-semibold bg-button text-button-text py-3 rounded-xl hover:brightness-85 active:brightness-85 md:w-75"
-      value={isEditing ? 'Save' : 'Add'} />
+      value={isViewing ? 'Edit' : isEditing ? 'Save' : 'Add'} />
     </form>
   )
 }
