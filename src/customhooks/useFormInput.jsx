@@ -3,6 +3,9 @@ import {v7 as genId} from 'uuid';
 import { useUpdateNote } from "./";
 export const useFormInput = () => {
     // function to recieve and handle create or edit inputs
+    const { updateNote } = useUpdateNote();
+    const navigate = useNavigate();
+
     const handleFormInput = (e, id) => {
         e.preventDefault(); // stop default
         // get and process form data
@@ -19,8 +22,8 @@ export const useFormInput = () => {
         // Ensure both inputs are filled
         const hasEmpty = Object.values(rawDataObj).some(val => !(val.trim()));
         if (hasEmpty) {
-        alert('All fields are required!');
-        return;
+            alert('All fields are required!');
+            return;
         }
 
         // add id appropriately
@@ -29,7 +32,12 @@ export const useFormInput = () => {
         const data = {_id : ID, ...rawDataObj}
         form.reset();
         updateNote(data, (isEditing ? 'edit' : 'new'));
-        navigate('/'); //return back to home page
+        // return flow
+        if (!isEditing) navigate('/');
+        if (isEditing) {
+            return false;
+        }
+        console.log('form handler ran!')
     };
 
   return {handleFormInput}
