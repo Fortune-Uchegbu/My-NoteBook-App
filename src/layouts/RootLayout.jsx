@@ -57,28 +57,29 @@ const RootLayout = () => {
   const outLetClass = "px-default grow min-w-0 h-full w-full";
 
   return (
-      <div aria-label="app-wrapper" className="w-full max-w-360 mx-auto text-text relative h-dvh overflow-hidden">
-        {mobile && 
+    // refactor in progress ⛑⛑
+    <div aria-label="app-wrapper" 
+    className="w-full h-dvh max-w-360 mx-auto text-text grid 
+    grid-cols-1 grid-rows-[auto_1fr_auto] 
+    lg:grid-cols-[25%_1fr] lg:[grid-template-areas:'header_header''aside_main''footer_footer']">
+      <DarkLayer 
+      mobile={mobile} />
+      <Header classes='lg:[grid-area:header] col-span-1' />
+      <aside 
+      className= {`fixed w-4/5 z-100 inset-y-0 left-0 py-3 px-default transition-transform duration-300 ease-in-out 
+      lg:[grid-area:aside] lg:translate-x-0 lg:static lg:z-0 lg:h-full lg:px-0 lg:py-0
+      ${!menuOpen ? '-translate-x-full ' : 'translate-x-0'} 
+      flex flex-col gap-y-2 bg-surface`}>
         <Menu
         ref={menuRef} 
-        mobile={mobile} />}
-        <DarkLayer 
         mobile={mobile} />
-        <div 
-        aria-label="underlay"
-        id="underlay"
-        className={`h-full py-2 lg:py-0 grow flex flex-col justify-between `}>
-          <Header />
-          <main className="lg:px-0 grow lg:flex h-full overflow-y-scroll">
-            {!mobile && 
-            <Menu 
-            mobile={mobile} />}
-            <Outlet 
-            context={{noteList, mobile, outLetClass}}/>
-          </main>
-          <Footer />
-        </div>
-      </div>
+      </aside>
+      <main className="col-span-1 lg:[grid-area:main] w-full lg:px-0 lg:flex h-full overflow-y-scroll">
+        <Outlet 
+        context={{noteList, mobile, outLetClass}}/>
+      </main>
+      <Footer />
+    </div>
     
   )
 }

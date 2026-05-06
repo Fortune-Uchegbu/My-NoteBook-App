@@ -21,7 +21,7 @@ export const Home = () => {
         </div>
       }
       {(noteList && noteList.length > 0) &&
-        <section className={`flex flex-col gap-y-3 py-3 ${outLetClass}`}>
+        <section className={`flex flex-col gap-y-3 overflow-y-scroll py-3 ${outLetClass}`}>
           {/* <h1 className="font-semibold text-xl">Notes</h1> */}
 
           <ul className="flex flex-col gap-y-3">
