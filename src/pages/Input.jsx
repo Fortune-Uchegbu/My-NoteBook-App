@@ -13,8 +13,7 @@ export const Input = ({ choice }) => {
   const [ title, setTitle ] = useState(isCreating ? '' : note.title);
   const [ body, setBody ] = useState(isCreating ? '' : note.body);
   useEffect(() => {
-    if (isEditing || isViewing)
-      titleRef.current?.focus();
+    titleRef.current?.focus();
   }, [isEditing, isViewing])
   const { handleFormInput } = useFormInput();
   const handleClick = (e) => {

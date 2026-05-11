@@ -9,21 +9,28 @@ export const Menu = ({mobile}) => {
     useEffect(()=>{
         // focus the menu first elem 
         const firstElem = menuRef.current?.querySelector('button');
-        firstElem.focus();
+        if(firstElem) firstElem.focus();
         // console.log(firstElem)
     },[menuOpen])
     return (
         <nav 
         id="menu"
-        className="w-full lg:w-full h-full bg-surface flex shrink-0 flex-col translate-x-0 lg:border-r lg:border-border"
+        className="w-full py-2 h-full bg-surface flex grow flex-col translate-x-0 lg:border-r lg:border-border"
         ref = {menuRef}>
             {mobile && <button
             id="closeMenu"
-            className="p-2 w-fit self-end" 
+            className="p-2 w-fit self-end shrink-0" 
             onClick={() => setMenuOpen(false)}>
                 <IoArrowBack className="w-6 h-6"/>
             </button>}
-            <List />
+
+            {
+            
+            <div className='h-full overflow-y-scroll px-2 grow'>
+                <List />
+            </div>
+            }
+
         </nav>
     )
 }

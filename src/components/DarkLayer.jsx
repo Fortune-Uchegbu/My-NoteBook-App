@@ -5,14 +5,13 @@ import { NoteContext } from "../contexts/NoteContext";
 const DarkLayer = ({mobile}) => {
   const {menuOpen, setMenuOpen} = useContext(NoteContext);
   return (
-    <>
-    {mobile && 
-      <div 
-      onClick={() => {if(menuOpen) setMenuOpen(false)}}
-      className={`fixed z-50 ${menuOpen && 'inset-0 bg-black opacity-40'}`}>
-      </div>
-    }
-    </>
+    <div 
+    onClick={() => {if(menuOpen) setMenuOpen(false)}}
+    className={`
+    fixed inset-0 z-50 bg-black transition-opacity duration-400 
+    ${menuOpen ? 'opacity-40 pointer-events-auto' : 'opacity-0 pointer-events-none'}
+    `}>
+    </div>
   )
 }
 

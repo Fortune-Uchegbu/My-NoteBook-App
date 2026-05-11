@@ -24,7 +24,6 @@ const RootLayout = () => {
   const mobile = windowSize.width < 1024;
 
   // accessibility
-  const menuRef = useRef(null); //to track menu component
   const handleEscape = (e) => (e.key === 'Escape') && setMenuOpen(false);
   useEffect(() => {
     const header = document.getElementsByTagName('header')[0];
@@ -66,13 +65,11 @@ const RootLayout = () => {
       mobile={mobile} />
       <Header classes='lg:[grid-area:header] col-span-1' />
       <aside 
-      className= {`fixed w-4/5 z-100 inset-y-0 left-0 py-3 px-default transition-transform duration-300 ease-in-out 
-      lg:[grid-area:aside] lg:translate-x-0 lg:static lg:z-0 lg:h-full lg:px-0 lg:py-0
+      className= {`fixed w-4/5 lg:w-full z-100 inset-y-0 left-0 py-3 px-default transition-transform duration-300 ease-in-out 
+      lg:[grid-area:aside] lg:translate-x-0 lg:static lg:z-0 lg:min-h-0 lg:px-0 lg:py-0
       ${!menuOpen ? '-translate-x-full ' : 'translate-x-0'} 
       flex flex-col gap-y-2 bg-surface`}>
-        <Menu
-        ref={menuRef} 
-        mobile={mobile} />
+        <Menu mobile={mobile} />
       </aside>
       <main className="col-span-1 lg:[grid-area:main] w-full lg:px-0 lg:flex h-full overflow-y-scroll">
         <Outlet 
