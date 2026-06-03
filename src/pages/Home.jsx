@@ -3,8 +3,9 @@ import { IoAdd } from "react-icons/io5";
 import { List } from "../components";
 
 export const Home = () => {
-  const {noteList, mobile, outLetClass} = useOutletContext();
+  const {noteData, mobile, outLetClass} = useOutletContext();
   const navigate = useNavigate();
+  const noteList = noteData.noteList;
   
 
   return (
@@ -13,6 +14,11 @@ export const Home = () => {
         <div className={`grid place-content-center h-full text-center relative ${outLetClass}`}>
           <p>You haven't added any notes yet.</p>
           <p>{`${mobile ? 'Tap' : 'Click'} '+' button to create.`}</p>
+        </div>
+      }
+      {(!mobile && noteList && noteList.length > 0) && 
+        <div className={`grid place-content-center h-full text-center relative ${outLetClass}`}>
+          <p>{`${mobile ? 'Tap' : 'Click'} '+' button to add a note.`}</p>
         </div>
       }
       {(mobile && noteList && noteList.length > 0) &&

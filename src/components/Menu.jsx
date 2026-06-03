@@ -15,7 +15,7 @@ export const Menu = ({mobile}) => {
     return (
         <nav 
         id="menu"
-        className="w-full py-2 h-full bg-surface flex grow flex-col translate-x-0 lg:border-r lg:border-border"
+        className="w-full py-0 lg:py-2 h-full bg-surface flex gap-y-4 grow flex-col translate-x-0 lg:border-r lg:border-border"
         ref = {menuRef}>
             {mobile && <button
             id="closeMenu"
@@ -24,11 +24,10 @@ export const Menu = ({mobile}) => {
                 <IoArrowBack className="w-6 h-6"/>
             </button>}
 
-            {
-            
-            <div className='h-full overflow-y-scroll px-2 grow'>
-                <List />
-            </div>
+            {!mobile && 
+                <div className='h-full overflow-y-scroll p-2 grow'>
+                    <List />
+                </div>
             }
 
         </nav>

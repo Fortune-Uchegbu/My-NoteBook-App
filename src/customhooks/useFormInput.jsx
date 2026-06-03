@@ -1,10 +1,13 @@
 import { useNavigate, useParams } from "react-router-dom";
 import {v7 as genId} from 'uuid';
-import { useUpdateNote } from "./";
+import { useContext } from "react";
+import { NoteContext } from "../contexts/NoteContext";
+
 export const useFormInput = () => {
     // function to recieve and handle create or edit inputs
-    const { updateNote } = useUpdateNote();
     const navigate = useNavigate();
+    const {noteData, dispatchNote} = useContext(NoteContext);
+    const noteList = noteData.noteList;
 
     const handleFormInput = (e, id) => {
         e.preventDefault(); // stop default
@@ -28,15 +31,18 @@ export const useFormInput = () => {
 
         // add id appropriately
         const isEditing = Boolean(id); // return true if id exists 
-        const ID = (isEditing) ? id : genId(); //gen new id if undefined
+        const ID = (isEditing) ? String(id) : genId(); //gen new id if undefined
         const data = {_id : ID, ...rawDataObj}
         form.reset();
-        updateNote(data, (isEditing ? 'edit' : 'new'));
+        //update state
+        dispatchNote({
+            type: (isEditing ? 'editNote' : 'createNote'),
+            payload: data
+        });
         // return flow
-        if (!isEditing) navigate('/');
-        if (isEditing) {
-            return false;
-        }
+        if (!isEditing) {
+            navigate('/');
+        } else return true;
         console.log('form handler ran!')
     };
 

@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { useEffect, useRef, useContext } from "react";
 import { Footer, Header, Menu } from '../components';
 import { NoteContext } from "../contexts/NoteContext";
@@ -6,23 +6,9 @@ import DarkLayer from "../components/DarkLayer";
 
 
 const RootLayout = () => {
+  const location = useLocation();
   // context
-  const {menuOpen, setMenuOpen, windowSize, setWindowSize, noteList} = useContext(NoteContext);
-
-  // window resize
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
-    window.addEventListener('resize', handleResize);
-    // Clean up listener on unmount
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-  const mobile = windowSize.width < 1024;
-
+  const {menuOpen, setMenuOpen, windowSize, setWindowSize, noteData, mobile} = useContext(NoteContext);
   // accessibility
   const handleEscape = (e) => (e.key === 'Escape') && setMenuOpen(false);
   useEffect(() => {
@@ -38,8 +24,8 @@ const RootLayout = () => {
         main.inert = true; 
         footer.inert = true;
       } 
-      //handle escape key      
-      window.addEventListener('keydown', handleEscape);
+      // //handle escape key      
+      // window.addEventListener('keydown', handleEscape);
     } else {
       document.body.style.overflow = 'unset';
       if(mobile) {
@@ -49,7 +35,7 @@ const RootLayout = () => {
       }
     }
     return () => {
-      window.removeEventListener('keydown', handleEscape);
+      // window.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = 'unset';
     }
   }, [menuOpen]);
@@ -73,7 +59,8 @@ const RootLayout = () => {
       </aside>
       <main className="col-span-1 lg:[grid-area:main] w-full lg:px-0 lg:flex h-full overflow-y-scroll">
         <Outlet 
-        context={{noteList, mobile, outLetClass}}/>
+        key = {location.pathname}
+        context={{noteData, mobile, outLetClass}}/>
       </main>
       <Footer />
     </div>

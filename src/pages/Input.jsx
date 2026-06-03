@@ -1,17 +1,29 @@
 import { useOutletContext, useParams} from "react-router-dom"
-import { useUpdateNote, useFormInput } from "../customhooks";
+import { useFormInput } from "../customhooks";
 import { useState, useRef, useEffect } from 'react'
 
 export const Input = ({ choice }) => {
   const titleRef = useRef(null);
   const { id } = useParams();
-  const {noteList,outLetClass} = useOutletContext();
+  const {noteData,outLetClass} = useOutletContext();
+  const noteList = noteData.noteList;
   const note = noteList.find(val => val._id === id);
   const [isEditing, setIsEditing] = useState(choice === 'edit');
   const [isCreating, setIsCreating] = useState(choice === 'new');
   const [isViewing, setIsViewing] = useState(choice === 'view');
   const [ title, setTitle ] = useState(isCreating ? '' : note.title);
   const [ body, setBody ] = useState(isCreating ? '' : note.body);
+
+  // const initialState = {
+  //   title: '',
+  //   content: '',
+  //   isCreating: false,
+  //   isEditing: false,
+  //   isViewing: false,
+  //   error: null
+  // };
+
+
   useEffect(() => {
     titleRef.current?.focus();
   }, [isEditing, isViewing])
@@ -32,7 +44,8 @@ export const Input = ({ choice }) => {
       e.preventDefault();
       if(!isViewing) {
         const editing = handleFormInput(e, id);
-        if (editing === false) {
+        // form view flow for editing case
+        if (editing) {
           setIsEditing(false);
           setIsViewing(true);
         }

@@ -4,7 +4,8 @@ import { NoteContext } from "../contexts/NoteContext";
 
 
 export const Header = ({classes}) => {
-  const {setMenuOpen, noteList} = useContext(NoteContext);
+  const {setMenuOpen, noteData} = useContext(NoteContext);
+  const noteList = noteData.noteList;
   return (
     <header className={`flex justify-between items-center px-default py-2 border-b border-border ${classes}`}>
       <span className="font-medium text-2xl">{(noteList.length > 0) ? 'Notes' : 'NoteBook'}</span>
