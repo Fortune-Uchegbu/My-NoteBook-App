@@ -11,39 +11,45 @@ export const useFormInput = () => {
 
     const handleFormInput = (e, id) => {
         e.preventDefault(); // stop default
-        // get and process form data
+        // extract form data
         const form = document.getElementById('inputForm');
         const rawData = new FormData(form); //get inputed data object
-        // trim of whitespaces in inputs
         const rawDataPairs = Array.from(rawData);
-        const trimmedDataPairs = rawDataPairs.map(([key, value]) => [key,
-        (typeof value === 'string' ) ? value.trim() : value
-        ]);
-        // processed data obj
-        const rawDataObj = Object.fromEntries(trimmedDataPairs);
+        console.log(rawDataPairs);
+        // api call - backend (to practice pessimistic state updates)
+        // send raw data iterable object
 
-        // Ensure both inputs are filled
-        const hasEmpty = Object.values(rawDataObj).some(val => !(val.trim()));
-        if (hasEmpty) {
-            alert('All fields are required!');
-            return;
-        }
 
-        // add id appropriately
-        const isEditing = Boolean(id); // return true if id exists 
-        const ID = (isEditing) ? String(id) : genId(); //gen new id if undefined
-        const data = {_id : ID, ...rawDataObj}
-        form.reset();
-        //update state
-        dispatchNote({
-            type: (isEditing ? 'editNote' : 'createNote'),
-            payload: data
+        // process form data - frontend version
+        // ensure no empty values & trim all pairs
+        const processedPairs = rawDataPairs.map(([key, value]) => {
+           if (!(value.trim())) {
+                alert('All fields are required!');
+                return [key, null];
+           } else return [key, String(value).trim()];
         });
-        // return flow
-        if (!isEditing) {
-            navigate('/');
-        } else return true;
-        console.log('form handler ran!')
+        // processed data obj
+        const nullValPresent = processedPairs.some(([key, value]) => (value === null));
+        if (!nullValPresent) {
+            const preDataObj = Object.fromEntries(processedPairs);
+
+            // create note object
+            const isEditing = Boolean(id); // return true if id exists (editing)
+            const ID = (isEditing) ? String(id) : genId(); //gen new id if undefined
+            const data = {_id : ID, ...preDataObj}
+            form.reset();
+
+            //update state
+            dispatchNote({
+                type: (isEditing ? 'editNote' : 'createNote'),
+                payload: data
+            });
+
+            // return flow
+            if (!isEditing) {
+                navigate('/');
+            } else return true;
+        }
     };
 
   return {handleFormInput}

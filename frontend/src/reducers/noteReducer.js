@@ -1,6 +1,6 @@
 // My first reducer
 export const initialNoteData = {
-        noteList: [],
+    noteList: [],
 };
 export const initializeState = () => {
     const savedNotes = localStorage.getItem('noteList');

@@ -1,0 +1,13 @@
+POST http://localhost:5000/api/notes
+Content-Type: application/json
+
+[
+    [
+        "title",
+        "Backend testing one                           "
+    ],
+    [
+        "body",
+        "                                                               \n\n            Creating an iterable object!    \n       \n                               "
+    ]
+]
