@@ -37,31 +37,66 @@ let hostedData = {
 };
 
 // endpoints/routes
-const call = '/api/notes';
 
-app.get(call, (req, res) => {
+// fetch call for read
+app.get('/api/notes', (req, res) => {
     res.status(200).json(hostedData.noteList);
 })
 
-app.post(call, (req, res) => {
+// post call for create
+app.post('/api/notes', (req, res) => {
+    const nullValPresent = (req.body).some(([key, value]) => !value || !value.trim());
+    if (nullValPresent) {
+        res.status(404).json({error: "inputs are empty!"});
+        return;
+    }
     // process incomng form data - backend version
-    const formattedObj = formatFormData(req.body);
-    const noteObj = formattedObj.noteObj;
-    const newHostedData = () => {
-        if(!(formattedObj.isEditing)) /*creating*/ {
-            return {
-                ...hostedData, 
-                noteList: [...hostedData.noteList, noteObj]
-            }
-        } else /*editing*/ {
-            return {
-                ...hostedData, 
-                noteList: hostedData.noteList.map(note => (note._id === noteObj._id) ? noteObj : note)
-            }
-        }
+    const parameters = {
+        rawDataPairs: req.body,
+        id: null
+    }        
+    const noteObj = formatFormData(parameters).noteObj;
+    const newHostedData =  {
+        ...hostedData, 
+        noteList: [...hostedData.noteList, noteObj]
     }
     console.log(newHostedData);
+    hostedData = newHostedData;
+    res.status(201).json({message: "note created successfully!", note: noteObj});
 })
+
+// put call for edit
+app.put('/api/notes/:id', (req, res) => {
+    const id = req.params.id
+    const nullValPresent = (req.body).some(([key, value]) => !value || !value.trim());
+    if (nullValPresent) {
+        res.status(404).json({error: "inputs are empty!"});
+        return;
+    }
+    const parameters = {
+        rawDataPairs: req.body,
+        id: req.params.id
+    }
+    const noteObj = formatFormData(parameters).noteObj;
+    const toBeEdited = hostedData.noteList.find(note => note._id === id);
+    // implement changes
+    toBeEdited.title = noteObj.title;
+    toBeEdited.body = noteObj.body;
+    res.status(201).json({message: "note edited successfully!", note: noteObj});
+})
+
+// delete call for delete
+app.delete('/api/notes/:id', (req, res) => {
+    const id = req.params.id;
+    const newNoteList = hostedData.noteList.filter(note => note._id != id);
+    // if note doesn't exist
+    if (newNoteList.length === hostedData.noteList.length) return res.status(404).json({error: 'note not found!'});
+    else {
+        hostedData.noteList = newNoteList;
+        res.status(200).json({message: `note with ${id} deleted successfully`})
+    }
+})
+
 
 // request listener
 const port = 5000;

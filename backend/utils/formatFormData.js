@@ -1,11 +1,11 @@
 import { v7 as genId } from 'uuid';
 
-export const formatFormData = (rawDataPairs) => {
+export const formatFormData = ({rawDataPairs, id}) => {
     // ensure no empty values & trim all pairs
     const processedPairs = rawDataPairs.map(([key, value]) => {
-        if (!(value.trim())) {
-            alert('All fields are required!');
-            return [key, null];
+        if (!value || !value.trim()) {
+            console.log('All fields are required!');
+            return null;
         } else return [key, String(value).trim()];
     });
 
@@ -18,7 +18,6 @@ export const formatFormData = (rawDataPairs) => {
         const isEditing = Boolean(id);
         const ID = (isEditing) ? String(id) : genId(); //gen new id if no existing one
         return {
-            isEditing: isEditing,
             noteObj: {_id : ID, ...preDataObj}
         };
     }
