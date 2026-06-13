@@ -1,5 +1,6 @@
 import react, { createContext, useState, useEffect, useReducer } from "react";
 import { noteReducer, initialNoteData, initializeState } from "../reducers/noteReducer";
+import { api } from '../api/axiosConfig';
 // import { toggleTheme } from "../utils";
 
 export const NoteContext = createContext();
@@ -7,10 +8,24 @@ export const NoteContext = createContext();
 export const NoteProvider = ({children}) => {
     // states
     const [noteData, dispatchNote] = useReducer(noteReducer, initialNoteData, initializeState)
-    // set data to localstorage for every update
+    // load data from backend after initial mounting
     useEffect(() => {
-        localStorage.setItem('noteList', JSON.stringify(noteData.noteList));
-    }, [noteData.noteList])
+        const fetchNotes = async () => {
+            try {
+                const savedNotes = await api.get('/notes');
+                // Update the state with the actual data from your JSON backend
+                dispatchNote({ 
+                    type: 'loadNote', 
+                    payload: savedNotes.data 
+                });
+            } catch (err) {
+                console.error("Failed to load initial notes:", err);
+            }
+        };
+        fetchNotes();
+
+    }, [])
+    // console.log(noteData)
 
     const [menuOpen, setMenuOpen] = useState(false);
     // window resize

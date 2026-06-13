@@ -4,6 +4,7 @@ import { FaTrash } from "react-icons/fa";
 // import { noteReducer } from "../reducers/noteReducer";
 // import { useUpdateNote } from "../customhooks/useUpdateNote";
 import { NavLink } from "react-router-dom";
+import { api } from '../api/axiosConfig';
 
 
 export const List = () => {
@@ -12,6 +13,24 @@ export const List = () => {
   // const {updateNote} = useUpdateNote();
   const handleCardClick = () => {
     if (mobile) setMenuOpen(false);
+  }
+  const handleDelete = async(note) => {
+    dispatchNote({type: 'deleteNote', payload: note}); // initial optimistic update
+    // backend syncing
+    const prevState = noteData; // prev state for rollback
+    try {
+      await api.delete(`/notes/${note._id}`);
+      console.log(`Note with id ${note._id} deleted successfully`)
+    } catch (error) {
+      console.error("Backend syncing failed! Rolling back changes...");
+      const serverErrorMessage = err.response?.data?.error || "Update failed";
+      alert(`Error: ${serverErrorMessage}. Reverting changes.`);
+      // reducer rollback
+      dispatchNote({
+        type: 'rollback',
+        payload: prevState
+      });
+    }
   }
 
 
@@ -29,7 +48,7 @@ export const List = () => {
           </NavLink>
           <button 
           className="p-6 cursor-pointer w-fit rounded-full hover:brightness-75 active:bg-border shrink-0" 
-          onClick={() => dispatchNote({type: 'deleteNote', payload: note})}>
+          onClick={() => handleDelete(note)}>
               <FaTrash className="w-4 h-4"/>
           </button>
         </li>

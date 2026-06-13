@@ -1,12 +1,12 @@
-// My first reducer
 export const initialNoteData = {
     noteList: [],
 };
 export const initializeState = () => {
-    const savedNotes = localStorage.getItem('noteList');
-    return {
-        noteList: savedNotes ? JSON.parse(savedNotes) : []
-    }
+    // const savedNotes = await api.get('/notes');
+    // console.log(savedNotes.data)
+    return initialNoteData;
+        // noteList: savedNotes ? savedNotes.data : []
+    
 }
 export const noteReducer = (state, action) => {
     switch (action.type) {
@@ -30,6 +30,8 @@ export const noteReducer = (state, action) => {
                 ...state, 
                 noteList: state.noteList.filter(note => note._id !== action.payload._id)
             };
+        case 'rollback':
+            return action.payload;
         default:
             console.log('an error occured in updateNote function');
             return state;

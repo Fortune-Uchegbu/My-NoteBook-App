@@ -14,16 +14,6 @@ export const Input = ({ choice }) => {
   const [ title, setTitle ] = useState(isCreating ? '' : note.title);
   const [ body, setBody ] = useState(isCreating ? '' : note.body);
 
-  // const initialState = {
-  //   title: '',
-  //   content: '',
-  //   isCreating: false,
-  //   isEditing: false,
-  //   isViewing: false,
-  //   error: null
-  // };
-
-
   useEffect(() => {
     titleRef.current?.focus();
   }, [isEditing, isViewing])
