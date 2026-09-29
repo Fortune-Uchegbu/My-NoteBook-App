@@ -1,10 +1,11 @@
 import { LuMenu } from "react-icons/lu";
 import { useContext } from "react";
-import { NoteContext } from "../contexts/NoteContext";
+import { NoteContext, UIContext } from "../contexts/NoteContext";
 
 
 export const Header = ({classes}) => {
-  const {setMenuOpen, noteData} = useContext(NoteContext);
+  const { noteData } = useContext(NoteContext);
+  const { setMenuOpen } = useContext(UIContext);
   const noteList = noteData.noteList;
   return (
     <header className={`flex justify-between items-center px-default py-2 border-b border-border ${classes}`}>

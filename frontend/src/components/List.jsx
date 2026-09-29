@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { NoteContext } from "../contexts/NoteContext";
+import { NoteContext, UIContext } from "../contexts/NoteContext";
 import { FaTrash } from "react-icons/fa";
 // import { noteReducer } from "../reducers/noteReducer";
 // import { useUpdateNote } from "../customhooks/useUpdateNote";
@@ -8,7 +8,8 @@ import { api } from '../api/axiosConfig';
 
 
 export const List = () => {
-  const {noteData, dispatchNote, menuOpen, setMenuOpen, mobile} = useContext(NoteContext);
+  const { noteData, dispatchNote } = useContext(NoteContext);
+  const { setMenuOpen, mobile } = useContext(UIContext);
   const noteList = noteData.noteList;
   // const {updateNote} = useUpdateNote();
   const handleCardClick = () => {

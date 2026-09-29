@@ -1,16 +1,16 @@
 import { Outlet, useLocation } from "react-router-dom";
-import { useEffect, useRef, useContext } from "react";
+import { useEffect, useContext } from "react";
 import { Footer, Header, Menu } from '../components';
-import { NoteContext } from "../contexts/NoteContext";
+import { NoteContext, UIContext } from "../contexts/NoteContext";
 import DarkLayer from "../components/DarkLayer";
 
 
 const RootLayout = () => {
   const location = useLocation();
-  // context
-  const {menuOpen, setMenuOpen, windowSize, setWindowSize, noteData, mobile} = useContext(NoteContext);
+  const { noteData } = useContext(NoteContext);
+  const { menuOpen, setMenuOpen, mobile } = useContext(UIContext);
   // accessibility
-  const handleEscape = (e) => (e.key === 'Escape') && setMenuOpen(false);
+  // const handleEscape = (e) => (e.key === 'Escape') && setMenuOpen(false);
   useEffect(() => {
     const header = document.getElementsByTagName('header')[0];
     const main = document.getElementsByTagName('main')[0];

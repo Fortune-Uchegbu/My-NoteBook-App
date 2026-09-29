@@ -1,9 +1,9 @@
 import React from 'react';
 import { useContext } from "react";
-import { NoteContext } from "../contexts/NoteContext";
+import { UIContext } from "../contexts/NoteContext";
 
 const DarkLayer = ({mobile}) => {
-  const {menuOpen, setMenuOpen} = useContext(NoteContext);
+  const {menuOpen, setMenuOpen} = useContext(UIContext);
   return (
     <div 
     onClick={() => {if(menuOpen) setMenuOpen(false)}}

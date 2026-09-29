@@ -1,10 +1,10 @@
 import { IoArrowBack } from "react-icons/io5";
-import { forwardRef, useState, useEffect, useContext, useRef } from "react";
+import { useEffect, useContext, useRef } from "react";
 import { List } from './'
-import { NoteContext } from "../contexts/NoteContext";
+import { UIContext } from "../contexts/NoteContext";
 
 export const Menu = ({mobile}) => {
-    const { menuOpen, setMenuOpen } = useContext(NoteContext);
+    const { menuOpen, setMenuOpen } = useContext(UIContext);
     const menuRef = useRef(null);
     useEffect(()=>{
         // focus the menu first elem 

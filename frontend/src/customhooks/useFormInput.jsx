@@ -8,47 +8,46 @@ import {api} from '../api/axiosConfig';
 export const useFormInput = () => {
     const navigate = useNavigate();
     const {noteData, dispatchNote} = useContext(NoteContext);
-    const noteList = noteData.noteList;
 
     const handleFormInput = async (e, id) => {
         e.preventDefault(); // stop default
         const isEditing = Boolean(id); // return true if id exists (editing)
-
         // extract form data
-        const form = document.getElementById('inputForm');
-        const rawData = new FormData(form); //get inputed data object
-        const rawDataPairs = Array.from(rawData);
-        // console.log(rawDataPairs);
-
-        // process form data - frontend version
-        // ensure no empty values & trim all pairs
-        const processedPairs = rawDataPairs.map(([key, value]) => {
-           if (!(value.trim())) {
+        const form = e.currentTarget;
+        const formDataPairs = new FormData(form);
+        const formDataObj = Object.fromEntries(formDataPairs);
+        console.log(formDataObj)
+        // process form data
+        // 1. ensure no empty values & trim all pairs
+        const processedPairsArr = Object.entries(formDataObj).map(([key, value]) => {
+            if (!(value.trim())) {
                 alert('All fields are required!');
                 return [key, null];
            } else return [key, String(value).trim()];
         });
-        // processed data obj
-        const nullValPresent = processedPairs.some(([key, value]) => (value === null));
+        
+        // console.log(processedPairsArr)
+        // 2. process values only when no pair is empty
+        const nullValPresent = processedPairsArr.some(([key, value]) => (value === null));
         if (!nullValPresent) {
-            const preDataObj = Object.fromEntries(processedPairs);
-
-            // create note object
+            // a. create note object
             const ID = (isEditing) ? String(id) : genId(); //gen new id if undefined
-            const data = {_id : ID, ...preDataObj}
-            form.reset();
+            const processedPairsObj = Object.fromEntries(processedPairsArr);
+            // console.log(processedPairsObj)
+            const data = {_id : ID, ...processedPairsObj}
+            form.reset(); //clear form 
 
-            //update state locally first
+            // b. update state locally
             dispatchNote({
                 type: (isEditing ? 'editNote' : 'createNote'),
                 payload: data
             });
 
-            // api call to update on backend server. Array of arrays
+            // c. api call to update on backend server. Array of arrays
             const prevState = noteData; // prev state for rollback
             if (!isEditing) /*creating*/ {
                 try {
-                    const response = await api.post('/notes', rawDataPairs);
+                    const response = await api.post('/notes', JSON.stringify(processedPairsObj));
                     console.log(response.data.message); // "note created successfully!"
                 } catch (error) {
                     console.error("Backend syncing failed! Rolling back changes...");
@@ -63,7 +62,7 @@ export const useFormInput = () => {
                 
             } else /*editing*/ {
                 try {
-                    const response = await api.put(`/notes/${id}`, rawDataPairs);
+                    const response = await api.put(`/notes/${id}`, JSON.stringify(processedPairsObj));
                     console.log(response.data.message); // "note edited successfully!"
                 } catch (error) {
                     console.error("Backend syncing failed! Rolling back changes...");

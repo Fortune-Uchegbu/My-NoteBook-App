@@ -1,38 +1,48 @@
-import react, { createContext, useState, useEffect, useReducer } from "react";
+import { createContext, useState, useEffect, useReducer, useMemo } from "react";
 import { noteReducer, initialNoteData, initializeState } from "../reducers/noteReducer";
 import { api } from '../api/axiosConfig';
-// import { toggleTheme } from "../utils";
 
-export const NoteContext = createContext();
+export const NoteContext = createContext(null);
+export const UIContext = createContext(null);
 
-export const NoteProvider = ({children}) => {
-    // states
-    const [noteData, dispatchNote] = useReducer(noteReducer, initialNoteData, initializeState)
-    // load data from backend after initial mounting
+export const NoteDataProvider = ({ children }) => {
+    const [noteData, dispatchNote] = useReducer(noteReducer, initialNoteData, initializeState);
+
     useEffect(() => {
         const fetchNotes = async () => {
             try {
                 const savedNotes = await api.get('/notes');
-                // Update the state with the actual data from your JSON backend
-                dispatchNote({ 
-                    type: 'loadNote', 
-                    payload: savedNotes.data 
+                dispatchNote({
+                    type: 'loadNote',
+                    payload: savedNotes.data,
                 });
             } catch (err) {
                 console.error("Failed to load initial notes:", err);
             }
         };
+
         fetchNotes();
+    }, []);
 
-    }, [])
-    // console.log(noteData)
+    const value = useMemo(() => ({
+        noteData,
+        dispatchNote,
+    }), [noteData, dispatchNote]);
 
+    return (
+        <NoteContext.Provider value={value}>
+            {children}
+        </NoteContext.Provider>
+    );
+};
+
+export const UIProvider = ({ children }) => {
     const [menuOpen, setMenuOpen] = useState(false);
-    // window resize
     const [windowSize, setWindowSize] = useState({
         width: window.innerWidth,
         height: window.innerHeight,
     });
+
     useEffect(() => {
         const handleResize = () => {
             setWindowSize({
@@ -40,18 +50,35 @@ export const NoteProvider = ({children}) => {
                 height: window.innerHeight,
             });
         };
+
         window.addEventListener('resize', handleResize);
         // Clean up listener on unmount
         return () => window.removeEventListener('resize', handleResize);
     }, []);
-    const mobile = windowSize.width < 1024; //screensize
-    
-    // value obj
-    const val = {noteData, dispatchNote, menuOpen, setMenuOpen, windowSize, setWindowSize, mobile}
+
+    const mobile = windowSize.width < 1024;
+
+    const value = useMemo(() => ({
+        menuOpen,
+        setMenuOpen,
+        windowSize,
+        setWindowSize,
+        mobile,
+    }), [menuOpen, windowSize, mobile]);
 
     return (
-        <NoteContext value={val}>
+        <UIContext.Provider value={value}>
             {children}
-        </NoteContext>
-    )
-}
+        </UIContext.Provider>
+    );
+};
+
+export const NoteProvider = ({ children }) => {
+    return (
+        <NoteDataProvider>
+            <UIProvider>
+                {children}
+            </UIProvider>
+        </NoteDataProvider>
+    );
+};
