@@ -1,13 +1,13 @@
 export const initialNoteData = {
-    noteList: [],
+    noteList: []
 };
-export const initializeState = () => {
-    // const savedNotes = await api.get('/notes');
-    // console.log(savedNotes.data)
-    return initialNoteData;
-        // noteList: savedNotes ? savedNotes.data : []
+// export const initializeState = () => {
+//     // const savedNotes = await api.get('/notes');
+//     // console.log(savedNotes.data)
+//     return initialNoteData;
+//         // noteList: savedNotes ? savedNotes.data : []
     
-}
+// }
 export const noteReducer = (state, action) => {
     switch (action.type) {
         case 'loadNote':

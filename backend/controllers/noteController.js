@@ -10,7 +10,7 @@ exports.getAllNotes = async (req, res) => {
         res.status(200).json(allNotes);
     } catch (error) {
         res.status(500).json({
-            'error': 'Failed to fetch notes'
+            'error': 'Failed to fetch notes.'
         })
     }
 }
@@ -23,10 +23,55 @@ exports.createNote = async (req, res) => {
     try {
         const newNote = new note({title, body});
         await newNote.save();
-        res.status(200).json(newNote);
+        res.status(201).json(newNote);
+        console.log(newNote)
     } catch (error) {
         res.status(500).json({
-            'error': 'Failed to create note'
+            'error': 'Failed to create note.'
+        })
+    }
+}
+
+// 3. edit note
+exports.updateNote = async (req, res) => {
+    const { id } = req.params;
+    const validatedData = validateReq(req, res);
+    if (!validatedData) return;
+    try {
+        const updatedNote = await note.findByIdAndUpdate(
+            id,
+            validatedData,
+            {new: true, runValidators: true}
+        )
+        // in the event that the id isn't found on the dB
+        if (!updatedNote) {
+            return res.status(404).json({
+                'error': 'Note not found!'
+            })
+        }
+        res.status(200).json(updatedNote);
+    } catch (error) {
+        res.status(500).json({
+            'error': 'Failed to edit note.'
+        })
+    }
+}
+
+// 3. delete note
+exports.deleteNote = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const deletedNote = await note.findByIdAndDelete (id)
+        // in the event that the id isn't found on the dB, deletedNote would return a null
+        if (!deletedNote) {
+            return res.status(404).json({
+                'error': 'Note not found!'
+            })
+        }
+        res.status(200).json("Note successfuly deleted.");
+    } catch (error) {
+        res.status(500).json({
+            'error': 'Failed to delete note.'
         })
     }
 }

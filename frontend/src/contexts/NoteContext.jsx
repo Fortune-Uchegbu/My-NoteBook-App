@@ -1,20 +1,20 @@
 import { createContext, useState, useEffect, useReducer, useMemo } from "react";
-import { noteReducer, initialNoteData, initializeState } from "../reducers/noteReducer";
-import { api } from '../api/axiosConfig';
+import { noteReducer, initialNoteData } from "../reducers/noteReducer";
+import { getAllNotes } from '../api/noteServices'
 
 export const NoteContext = createContext(null);
 export const UIContext = createContext(null);
 
 export const NoteDataProvider = ({ children }) => {
-    const [noteData, dispatchNote] = useReducer(noteReducer, initialNoteData, initializeState);
+    const [noteData, dispatchNote] = useReducer(noteReducer, initialNoteData);
 
     useEffect(() => {
         const fetchNotes = async () => {
             try {
-                const savedNotes = await api.get('/notes');
+                const savedNotes = await getAllNotes();
                 dispatchNote({
                     type: 'loadNote',
-                    payload: savedNotes.data,
+                    payload: savedNotes,
                 });
             } catch (err) {
                 console.error("Failed to load initial notes:", err);
