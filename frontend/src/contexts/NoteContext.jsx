@@ -12,9 +12,10 @@ export const NoteDataProvider = ({ children }) => {
         const fetchNotes = async () => {
             try {
                 const savedNotes = await getAllNotes();
+                console.log(savedNotes);
                 dispatchNote({
                     type: 'loadNote',
-                    payload: savedNotes,
+                    payload: savedNotes.data,
                 });
             } catch (err) {
                 console.error("Failed to load initial notes:", err);

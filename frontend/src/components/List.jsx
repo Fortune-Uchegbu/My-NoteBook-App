@@ -8,11 +8,7 @@ import { useNoteList } from '../customhooks/useNoteList';
 export const List = () => {
   const { noteData } = useContext(NoteContext);
   const { setMenuOpen, mobile } = useContext(UIContext);
-  const { handleDelete } = useNoteList();
-
-  const handleCardClick = () => {
-    if (mobile) setMenuOpen(false);
-  }
+  const { handleDelete } = useNoteList();  
   
   return (
     <ul className="flex flex-col gap-y-3">
@@ -20,7 +16,7 @@ export const List = () => {
         <li 
         className="noteItem w-full shadow border border-border rounded-xl flex justify-between items-center gap-x-6 min-w-0 hover:cursor-pointer active:"
         key={note._id}>
-          <NavLink className={'grow rounded-xl'} onClick={handleCardClick} to={`note/${note._id}`}>
+          <NavLink className={'grow rounded-xl'} to={`note/${note._id}`}>
             <div className="w-full py-4 pl-4">
               <h2 className="line-clamp-1 wrap-break-word font-semibold">{note.title}</h2>
               <p className="line-clamp-1 wrap-break-word">{note.body}</p>

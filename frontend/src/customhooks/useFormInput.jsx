@@ -51,10 +51,10 @@ export const useFormInput = () => {
                     // update state to same note with permanent, dB generated _id
                     dispatchNote({
                         type: 'editNote',
-                        payload: response
+                        payload: response.data
                     });
                 } catch (error) {
-                    console.error("Backend syncing failed:", error);
+                    console.error("Backend syncing failed:", error.response);
                     const serverErrorMessage = error.response?.data?.error || "Update failed!";
                     alert(`Error: ${serverErrorMessage} Reverting changes.`);
                     // use reducer to implement rollback

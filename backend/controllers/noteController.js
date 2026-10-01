@@ -17,15 +17,20 @@ exports.getAllNotes = async (req, res) => {
 
 // 2. create note
 exports.createNote = async (req, res) => {
+    console.log(req.body)
     const validatedData = validateReq(req, res);
+    console.log(validatedData)
     if (!validatedData) return;
+    console.log(validatedData)
     const {title, body} = validatedData;
+    console.log(title, body)
     try {
         const newNote = new note({title, body});
         await newNote.save();
         res.status(201).json(newNote);
         console.log(newNote)
     } catch (error) {
+        console.error(error);
         res.status(500).json({
             'error': 'Failed to create note.'
         })
@@ -57,7 +62,7 @@ exports.updateNote = async (req, res) => {
     }
 }
 
-// 3. delete note
+// 4. delete note
 exports.deleteNote = async (req, res) => {
     const { id } = req.params;
     try {
