@@ -11,7 +11,7 @@ export const initialNoteData = {
 export const noteReducer = (state, action) => {
     switch (action.type) {
         case 'loadNote':
-            console.log(state)
+            // console.log(state)
             return {
                 ...state,
                 noteList: action.payload

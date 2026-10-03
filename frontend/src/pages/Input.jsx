@@ -1,11 +1,14 @@
 import { useOutletContext, useParams} from "react-router-dom"
 import { useFormInput } from "../customhooks";
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react';
+import { useContext } from "react";
+import { NoteContext } from "../contexts/NoteContext";
 
 export const Input = ({ choice }) => {
   const titleRef = useRef(null);
   const { id } = useParams();
-  const {noteData,outLetClass} = useOutletContext();
+  const {outLetClass} = useOutletContext();
+  const {noteData} = useContext(NoteContext);
   const noteList = noteData.noteList;
   const note = noteList.find(val => val._id === id);
   const [isEditing, setIsEditing] = useState(choice === 'edit');
@@ -27,7 +30,9 @@ export const Input = ({ choice }) => {
   }
 
   return (
-    <form 
+    <>
+    {!note && <div className="place-self-center lg:justify-self-center">Loading...</div>}
+    {note && <form 
     id="inputForm"
     className={`${outLetClass} h-full py-3 flex flex-col gap-y-4`}
     onSubmit={(e) => { 
@@ -67,7 +72,8 @@ export const Input = ({ choice }) => {
       onClick={handleClick}
       className="font-semibold bg-button text-button-text py-3 rounded-xl hover:brightness-85 hover:cursor-pointer active:brightness-85 md:w-75"
       value={isViewing ? 'Edit' : isEditing ? 'Save' : 'Add'} />
-    </form>
+    </form>}
+    </>
   )
 }
 

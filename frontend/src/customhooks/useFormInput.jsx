@@ -43,11 +43,13 @@ export const useFormInput = () => {
                 payload: finalNoteObj
             });
 
-            // c. api call to update on backend server. Array of arrays
+            // c. api call to update on backend server
             const prevState = noteData; // prev state for rollback
             if (!isEditing) /*creating*/ {
                 try {
+                    // console.log("sent data:", processedPairsObj)
                     const response = await createNote(processedPairsObj);
+                    // console.log("recieved data:", response)
                     // update state to same note with permanent, dB generated _id
                     dispatchNote({
                         type: 'editNote',

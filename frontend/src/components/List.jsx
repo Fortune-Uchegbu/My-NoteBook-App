@@ -24,7 +24,7 @@ export const List = () => {
           </NavLink>
           <button 
           className="p-6 cursor-pointer w-fit rounded-full hover:brightness-75 active:bg-border shrink-0" 
-          onClick={() => handleDelete(note._id)}>
+          onClick={() => handleDelete(note)}>
               <FaTrash className="w-4 h-4"/>
           </button>
         </li>

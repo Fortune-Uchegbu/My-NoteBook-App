@@ -17,18 +17,18 @@ exports.getAllNotes = async (req, res) => {
 
 // 2. create note
 exports.createNote = async (req, res) => {
-    console.log(req.body)
+    // console.log(req);
     const validatedData = validateReq(req, res);
-    console.log(validatedData)
+    // console.log(validatedData)
     if (!validatedData) return;
-    console.log(validatedData)
+    // console.log(validatedData)
     const {title, body} = validatedData;
-    console.log(title, body)
+    // console.log(title, body)
     try {
         const newNote = new note({title, body});
         await newNote.save();
         res.status(201).json(newNote);
-        console.log(newNote)
+        // console.log(newNote)
     } catch (error) {
         console.error(error);
         res.status(500).json({
@@ -46,7 +46,7 @@ exports.updateNote = async (req, res) => {
         const updatedNote = await note.findByIdAndUpdate(
             id,
             validatedData,
-            {new: true, runValidators: true}
+            {returnDocument: 'after', runValidators: true}
         )
         // in the event that the id isn't found on the dB
         if (!updatedNote) {

@@ -3,17 +3,17 @@ const noteModel = require("../models/noteModel");
 const validateReq = (req, res) => {
 
     const {title, body} = req.body;
-    // console.log(title, body)
+    console.log(title, body)
     // validation before interaction with dB
     // a. char type
     if ( typeof title !== "string" || typeof body !== "string" ) {
-        console.log(title, body)
+        console.log("error:", title, body)
         res.status(400).json({
             'error': 'Title and Body must be Strings'
         });
         return null;
     }
-    // console.log(title, body)
+    console.log("success:", title, body)
     const trimmedTitle = title.trim()
     const trimmedBody = body.trim();
     // b. empty fields
@@ -23,11 +23,7 @@ const validateReq = (req, res) => {
         });
         return null;
     }
-    const note = {
-        title: trimmedTitle,
-        body: trimmedBody
-    };
-    console.log(note);
+    const note = {title, body};
     return note;
 }
 

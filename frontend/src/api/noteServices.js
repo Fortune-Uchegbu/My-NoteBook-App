@@ -2,12 +2,12 @@ import { api } from './axiosConfig';
 
 export const getAllNotes = async () => {
     const response = await api.get('/');
-    console.log(response);
+    // console.log(response);
     return response;
 }
 
 export const createNote = async (noteObj) => {
-    console.log("hhhhh");
+    // console.log("hhhhh");
     const response = await api.post('/create', noteObj);
     // console.log(response);
     return response;

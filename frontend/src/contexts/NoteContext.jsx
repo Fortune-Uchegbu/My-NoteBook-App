@@ -12,7 +12,7 @@ export const NoteDataProvider = ({ children }) => {
         const fetchNotes = async () => {
             try {
                 const savedNotes = await getAllNotes();
-                console.log(savedNotes);
+                // console.log(savedNotes);
                 dispatchNote({
                     type: 'loadNote',
                     payload: savedNotes.data,
