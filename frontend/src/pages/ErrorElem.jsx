@@ -11,7 +11,7 @@ export const ErrorElem = () => {
         )
     }
   return (
-    <div className="h-dvh flex items-center justify-center">
+    <div className="h-dvh flex items-center justify-center px-5 text-center">
         <p>Sorry! Something went wrong in the app. Please reload.</p>
     </div>
   )

@@ -11,12 +11,20 @@ export const Input = ({ choice }) => {
   const {noteData} = useContext(NoteContext);
   const noteList = noteData.noteList;
   const note = noteList.find(val => val._id === id);
+  // console.log(id, noteData, note)
   const [isEditing, setIsEditing] = useState(choice === 'edit');
   const [isCreating, setIsCreating] = useState(choice === 'new');
   const [isViewing, setIsViewing] = useState(choice === 'view');
-  const [ title, setTitle ] = useState(isCreating ? '' : note.title);
-  const [ body, setBody ] = useState(isCreating ? '' : note.body);
+  const [ title, setTitle ] = useState(isCreating ? '' : (note?.title || ''));
+  const [ body, setBody ] = useState(isCreating ? '' : (note?.body || ''));
+  // console.log(id, noteData, note)
 
+  useEffect(() => {
+    if(note) {
+      setTitle(note?.title || '');
+      setBody(note?.body || '');
+    }
+  }, [note]);
   useEffect(() => {
     titleRef.current?.focus();
   }, [isEditing, isViewing])
@@ -31,8 +39,8 @@ export const Input = ({ choice }) => {
 
   return (
     <>
-    {!note && <div className="place-self-center lg:justify-self-center">Loading...</div>}
-    {note && <form 
+    {(!noteList || noteList.length == 0) && <p className="">Loading...</p>}
+    {(noteList && noteList.length !== 0) && <form 
     id="inputForm"
     className={`${outLetClass} h-full py-3 flex flex-col gap-y-4`}
     onSubmit={(e) => { 

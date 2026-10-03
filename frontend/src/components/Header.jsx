@@ -10,9 +10,9 @@ export const Header = ({classes}) => {
   return (
     <header className={`flex justify-between items-center px-default py-2 border-b border-border ${classes}`}>
       <span className="font-medium text-2xl">{(noteList.length > 0) ? 'Notes' : 'NoteBook'}</span>
-      <button className="lg:hidden p-2 hover:cursor-pointer" onClick={() => setMenuOpen(prev => !prev)}>
+      {/* <button className="lg:hidden p-2 hover:cursor-pointer" onClick={() => setMenuOpen(prev => !prev)}>
         <LuMenu className="w-6 h-6"/>
-      </button>
+      </button> */}
     </header>
   )
 }

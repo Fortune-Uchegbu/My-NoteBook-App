@@ -57,7 +57,7 @@ const RootLayout = () => {
       flex flex-col gap-y-2 bg-surface`}>
         <Menu mobile={mobile} />
       </aside>
-      <main className="col-span-1 lg:[grid-area:main] w-full lg:px-0 lg:flex h-full overflow-y-scroll">
+      <main className="col-span-1 lg:[grid-area:main] w-full lg:px-0 flex justify-center items-center h-full overflow-y-scroll">
         <Outlet 
         key = {location.pathname}
         context={{noteData, mobile, outLetClass}}/>
