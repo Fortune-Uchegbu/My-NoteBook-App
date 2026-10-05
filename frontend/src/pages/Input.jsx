@@ -39,8 +39,8 @@ export const Input = ({ choice }) => {
 
   return (
     <>
-    {(!noteList || noteList.length == 0) && <p className="">Loading...</p>}
-    {(noteList && noteList.length !== 0) && <form 
+    {(!isCreating && !note) && <p className="">Loading...</p>}
+    {(isCreating || (!isCreating && note))&& <form 
     id="inputForm"
     className={`${outLetClass} h-full py-3 flex flex-col gap-y-4`}
     onSubmit={(e) => { 

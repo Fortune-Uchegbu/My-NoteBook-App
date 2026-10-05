@@ -3,15 +3,14 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const noteRoutes = require('./routes/noteRoutes.js');
+const connectDB = require('./config/db.js');
+require('dotenv').config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('mongodb://127.0.0.1:27017/notebook')
-    .then(() => console.log('database connected successfully'))
-    .catch((error) => console.error('Connection unsuccessful. Error:', error))
-
+connectDB();
 
 app.use('/api', noteRoutes);
 
